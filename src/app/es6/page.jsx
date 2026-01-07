@@ -1,4 +1,7 @@
 "use client";
+
+import { useState } from "react";
+
 // import { Scripts } from "@/components/Scripts";
 // import { App } from "../../components/App";
 // import { URL } from "next/dist/compiled/@edge-runtime/primitives/url";
@@ -64,20 +67,13 @@
 //   <div className="bg-amber-400">{stock > 0 ? "in stock" : "out of stock"}</div>
 // );
 
-export default function Home() {
-  return (
-    <div className="flex justify-center items-center h-screen bg-pink-300 ">
-      <BirthdayList />
-    </div>
-  );
-}
-
-const Birthday = [
+const birthdayArr = [
   {
     id: 1,
     name: "Bold",
     age: 15,
-    image: "https://avatar.iran.liara.run/public",
+    image:
+      "https://fastly.picsum.photos/id/598/200/300.jpg?hmac=c9kgWi8odXWkpyKN-5-0KWv8vx8fsxSrRkE_CRPUezE",
   },
 
   {
@@ -91,32 +87,47 @@ const Birthday = [
     id: 3,
     name: "chimeg",
     age: 1526,
-    image: "",
+    image: "https://picsum.photos/200/300",
   },
 
   {
     id: 4,
     name: "dddddd",
     age: 131,
-    image: "",
+    image: "https://picsum.photos/200/300",
   },
 
   {
     id: 5,
     name: "Boldssssssssss",
     age: 20,
-    image: "",
+    image: "https://picsum.photos/200/300",
   },
 ];
 
-const BirthdayList = () => {
+export default function Home() {
+  const [birthdays, setBirthdays] = useState(birthdayArr);
+  const clearAll = () => {
+    setBirthdays([]);
+  };
+  return (
+    <div className="flex flex-col justify-center items-center h-screen bg-pink-300 ">
+      <BirthdayList birthdays={birthdays} />
+      <button className="bg-amber-300 w-100 " onClick={clearAll}>
+        clear all
+      </button>
+    </div>
+  );
+}
+
+const BirthdayList = ({ birthdays }) => {
   return (
     <div className=" bg-white p-10">
       <h1 className="font-semibold mb-8 text-3xl text-black">
-        {Birthday.length} birthdays today
+        {birthdays.length} birthdays today
       </h1>
       <div className="flex flex-col gap-4">
-        {Birthday.map(({ id, age, name, image }) => (
+        {birthdays.map(({ id, age, name, image }) => (
           <BirthdayListItem key={id} name={name} age={age} image={image} />
         ))}
       </div>
@@ -124,17 +135,13 @@ const BirthdayList = () => {
   );
 };
 
-const BirthdayListItem = () => {
+const BirthdayListItem = ({ name, age, image }) => {
   return (
     <div className="flex gap-4 items-center w-134">
-      <img
-        className="w-20 h-20 rounded-full"
-        src={Birthday.image}
-        alt="profile"
-      />
+      <img className="w-20 h-20 rounded-full" src={image} alt="profile" />
       <div>
-        <h2 className="text-2xl font-bold">{Birthday.name}</h2>
-        <p className="text-gray-500">{Birthday.age}</p>
+        <h2 className="text-2xl font-bold">{name}</h2>
+        <p className="text-gray-500">{age}</p>
       </div>
     </div>
   );
